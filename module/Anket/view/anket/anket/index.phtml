@@ -1,0 +1,61 @@
+<?php
+switch ($type) {
+    case 1:
+        $name = '1 "Заказ холодильных камер"';
+        break;
+    case 2:
+        $name = '2 "Заказа Микроволновых печей"';
+        break;
+    case 3:
+        $name = '3 "Заказа Чайников"';
+        break;
+    case 4:
+        $name = '4 "Заказа Овощей"';
+        break;
+}
+$title = 'Working with Forms';
+$this->headTitle($title);
+echo $this->escapeHtml($title); ?>
+<h3><?php echo 'Анкета ' . $name . ' - результаты' ?></h3>
+<form
+    action="<?php echo $this->url('anket', array('controller' => 'anket', 'action' => 'delete', 'page' => '1', 'type' => $type)); ?>"
+    method="post" name="anket">
+    <div align='right'>
+        <input type="submit" name="delete" value="  Удалить " return false;" />
+    </div>
+    <table class="table">
+        <?php foreach ($paginator as $anket) : ?>
+            <tr>
+                <td width="2%">
+                    <input type="checkbox" name="chekdel <?php echo (int)$anket->id; ?>"
+                           value="<?php echo (int)$anket->id; ?>"/>
+                </td>
+                <td width="20%">
+                    Ф.И.О: <strong><?php echo $this->escapeHtml($anket->name); ?></strong><br/>
+                    Телефон: <strong><?php echo $this->escapeHtml($anket->phone); ?></strong><br/>
+                    Emeil: <strong><?php echo $this->escapeHtml($anket->email); ?></strong><br/>
+                    Вид оборудования: <strong><?php echo $this->escapeHtml($anket->type_equipment); ?></strong><br/>
+                </td>
+                <td width="20%">
+                    <?php
+                    $call = (int)$anket->call_back;
+                    if ($call == 1) $answer = 'Да'; else $answer = 'Нет';
+                    ?>
+                    Перезвонить мне: <strong><?php echo $this->escapeHtml($answer); ?></strong><br/>
+                    Ваши коментарии: <strong><?php echo $this->escapeHtml($anket->comments); ?></strong><br/>
+                    Дата: <strong><?php echo $this->escapeHtml($anket->date); ?></strong><br/>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</form>
+
+<br><br>
+
+<div align='right'>
+    <?php
+    echo $this->paginationControl(
+        $paginator, 'Sliding', 'paginator', array('order_by' => $order_by, 'order' => $order, 'type' => $type,)
+    );
+    ?>
+</div>

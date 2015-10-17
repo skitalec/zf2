@@ -1,0 +1,63 @@
+<?php
+if ($user = $this->identity()) {
+    $emailusr = $user->usr_email;
+} ?>
+<a href="<?php echo $this->url('myauth', array('controller' => 'index', 'action' => 'logout')); ?>"><?php echo $this->translate('Выйти'); ?></a>
+<?php
+$title = 'Общий список анкет';
+$this->headTitle($title);
+?>
+<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+<h3>Список анкет пользователя <?php echo $this->escapeHtml($emailusr); ?></h3>
+<form action="<?php echo $this->url('anket', array('controller' => 'anket', 'action' => 'delete')); ?>" method="post"
+      name="anket">
+
+    <div align='right'>
+        <input type="submit" id="your-id" name="delete" value="  Удалить " return false;" />
+    </div>
+    <?php foreach ($anket as $anket) : ?>
+    <?php
+    switch ($anket->name_anket) {
+        case 1:
+            $name = '1 , Для заказа Холодильных камер';
+            break;
+        case 2:
+            $name = '2 , Для заказа Микроволновых печей';
+            break;
+        case 3:
+            $name = '3 , Для заказа Чайников';
+            break;
+        case 4:
+            $name = '4 , Для заказа Овощей';
+            break;
+    }
+    ?>
+    <?php if (($anket->email) == $emailusr) { ?>
+    <table class="table" cellpadding="10" width="80%">
+        <tr>
+            <td width="4%">
+                <input type="checkbox" name="chekdel <?php echo (int)$anket->id; ?>"
+                       value="<?php echo (int)$anket->id; ?>"/>
+            </td>
+            <td width="40%">
+                <a href="<?php echo $this->url('anket', array('controller' => 'anket', 'action' => 'edit', 'id' => $anket->id)); ?>">
+                    <?php echo 'Анкета ' . $this->escapeHtml($name); ?>
+                </a><br/>
+            </td>
+            <td width="10%">
+                <a href="">Правка</a>
+            </td>
+            <td width="20%"><a
+                    href="<?php echo $this->url('anket', array('controller' => 'anket', 'action' => 'index', 'page' => '1', 'type' => $anket->name_anket)); ?>">
+                    Результаты (<?php echo $result[$anket->name_anket]; ?>)</a>
+            </td>
+            <td width="20%"><?php
+                echo $this->escapeHtml($anket->date); ?>
+            </td>
+        </tr>
+        <?php } ?>
+        <?php endforeach; ?>
+    </table>
+</form>
+<br><br>

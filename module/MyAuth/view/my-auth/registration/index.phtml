@@ -1,0 +1,35 @@
+<html>
+<center>
+    <h1>Registration</h1>
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('myauth', array('controller' => 'registration', 'action' => 'index')));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+
+    <table cellpadding="10" width="30%">
+        <tr>
+            <td> Логин</td>
+            <td><?php echo $this->formRow($form->get('usr_name')); ?></td>
+        </tr>
+        <td>Email</td>
+        <td><?php echo $this->formRow($form->get('usr_email')); ?></td>
+        </tr>
+        <td>Пароль</td>
+        <td><?php echo $this->formRow($form->get('usr_password')); ?></td>
+        </tr>
+        <td>Повторите пароль</td>
+        <td><?php echo $this->formRow($form->get('usr_password_confirm')); ?></td>
+        </tr>
+    </table>
+    <br><br>
+
+    <?
+    echo $this->formRow($form->get('captcha'));
+    echo "<br><br>";
+    echo $this->formSubmit($form->get('submit'));
+    echo $this->form()->closeTag();
+    ?>
+</center>
+</html>
