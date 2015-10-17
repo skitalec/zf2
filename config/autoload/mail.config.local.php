@@ -7,7 +7,7 @@ return array(
                 'connection_class' => 'login',
                 'port' => '465',
                 'connection_config' => array(
-                    'username' => 'mailtest7535@gmail.com',
+                    'username' => 'mail@gmail.com',
                     'password' => 'you_pass',
                     'ssl' => 'ssl'
                 ),
